@@ -1,0 +1,355 @@
+\chapter{Mathematics}
+\label{methematics}
+\section{Linear Algebra}
+\section{Fourier Transform}
+\subsection{复数表示}
+	直角坐标表示：
+	\begin{equation*}
+		z = x + iy
+	\end{equation*}
+	
+	极坐标表示：
+	\begin{equation*}
+		z = \rho e^{i\theta}
+	\end{equation*}
+	
+	欧拉函数：
+	\begin{equation}
+	\label{Euler_function}
+	\begin{aligned}
+		e^{i\theta} &= \cos\theta + i\sin\theta	\\
+		e^{i\pi} &= -1
+	\end{aligned}
+	\end{equation}
+
+\subsection{复数性质}
+	对于$z\in \mathbb{C}$，则$f(z)\in \mathbb{C}$为复变函数，令$z=x+iy$，那么$f(z)=u+iv$，其中$x,y,u,v\in \mathbb{R}$。若$\lim\limits_{z\to z_0}f(z)$存在，则对于$x$方向，$\lim\limits_{z\to z_0}\frac{\triangle f(z)}{\triangle x} = \lim\limits_{z\to z_0}\frac{\triangle u + i\triangle v}{\triangle x}$；对于$y$方向，$\lim\limits_{z\to z_0}\frac{\triangle f(z)}{i\triangle y} = \lim\limits_{z\to z_0}\frac{\triangle u + i\triangle v}{i\triangle y}$，两方向要相等，故
+	\begin{equation}
+	\label{C_R}
+	\begin{cases}
+		\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y} &\text{，实部}\\
+		\frac{\partial v}{\partial x}=-\frac{\partial u}{\partial y} &\text{，虚部}
+	\end{cases}
+	\end{equation}
+	式子（\ref{C_R}）为\textbf{柯西-黎曼关系}（C-R关系)。若函数$f(z)$在定义域内满足柯西-黎曼关系，则称为该函数在定义域内可解析 。
+	
+	如果平面区域$\mathbb{D}$内任意闭曲线所围部分属于$\mathbb{D}$，那么称$\mathbb{D}$是单连通区域，否则称为复连通区域。
+	
+	\noindent\textbf{定理：函数$f(z)$在单连通区域$\mathbb{D}$内满足C-R关系，则对任意封闭曲线L，有}
+	\begin{equation}
+	\label{theory_oint}
+		\oint_Lf(z)dz=0
+	\end{equation}。
+	
+	\noindent\textbf{证明：}
+	\begin{equation*}
+	\begin{aligned}
+		\oint_Lf(z)dz &= \oint_L(u+iv)(dx+idy)	\\
+		&= \oint_L(udx-vdy) +i\oint(vdx+udy)	\\
+		&= \iint_{\mathbb{D}}(-\frac{\partial v}{\partial x} - \frac{\partial u}{\partial y})dxdy + i\iint_{\mathbb{D}}(\frac{\partial u}{\partial x}-\frac{\partial v}{\partial y})dxdy
+	\end{aligned}
+	\end{equation*}
+	代入公式（\ref{C_R}）得$\oint_Lf(z)dz=0$。注：格林公式$\oint_LPdx+Qdy=\iint_{\mathbb{D}}(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y})dxdy$。
+	
+	\hfill{\textbf{证毕}}
+	
+	复数的重要性质：已知单连通区域上的边界点，我们就可以求得该区域内的所有点的函数值。
+	\begin{equation}
+	\label{complex_ch1}
+		f(z_0)=\frac{1}{2\pi i}\oint_L\frac{f(z)}{z-z_0}dz
+	\end{equation}
+	其中，$L$为单连通区域$\mathbb{D}$的边界，$z_0\in\mathbb{D}$。
+	
+	\noindent\textbf{证明：}
+	
+	由上述定理可知单连通区域内，任意封闭曲线积分都为零，故取$L$为以$z_0$为圆心，$\delta$为半径的圆，则
+	\begin{equation}
+	\begin{aligned}
+		\frac{1}{2\pi i}\oint_L\frac{f(z)}{z-z_0}dz &= \lim\limits_{\delta\to 0}\frac{f(z_0)}{2\pi i}\oint_L\frac{dz}{z-z_0}	\\
+		&= \frac{f(z_0)}{2\pi i}\int_0^{2\pi}id\theta	\\
+		&= f(z_0)
+	\end{aligned}
+	\end{equation}
+	\hfill{\textbf{证毕}}
+	
+	由此，又可以得到该区域内的任意点导数为:
+	\begin{equation}
+	\label{complex_ch2}
+		f^{(n)} = \frac{n!}{2\pi i}\oint_L\frac{f(z)}{(z-z_0)^{n+1}}dz
+	\end{equation}
+	
+	当$n=1$时，
+	\begin{equation}
+	\begin{aligned}
+		f'(z) 
+		&= \frac{d}{dz}[f(z)]	\\
+		&= \frac{d}{dz}[\frac{1}{2\pi i}\oint_L\frac{f(w)}{w-z}dw]	\\
+		&= \frac{1}{2\pi i}\oint_Lf(w)\frac{d}{dz}(\frac{1}{w-z})dw\\
+		&= \frac{1}{2\pi i}\oint_Lf(w)\frac{1}{(w-z)^2}dw
+	\end{aligned}
+	\end{equation}
+	对此继续求导便可得到公式（\ref{complex_ch2})。
+
+\subsection{卷积}
+	卷积的定义：
+	\begin{equation}
+	\label{convolution}
+		f*g(x)=\int_{-\infty}^{+\infty} f(t)g(x-t)dt
+	\end{equation}
+	
+	卷积的性质：
+	\begin{enumerate}[itemindent=3em]
+		\item 线性；$f*(\alpha g_1 + \beta g_2) = \alpha f*g_1 + \beta f*g_2$
+		\item 交换律；$f*g=g*f$
+		\item 结合律；$(f*g)*h = f*(g*h)$
+	\end{enumerate}
+
+\subsection{傳里叶级数}
+	函数点积的定义：
+	\begin{equation}
+	\label{dot_product}
+		<f(x),g(x)> = \int_{-\infty}^{+\infty}f(x)\bar{g}(x)dx
+	\end{equation}
+	根据此定义可得：
+	\begin{equation*}
+	\begin{aligned}
+		<\sin n_1x, \cos n_2x> 
+		&= \int_{-\infty}^{+\infty}\sin n_1x\cos n_2xdx	\\
+		&= \frac{1}{2}\int_{-\infty}^{+\infty}[\sin (n_1+n_2)x + \sin (n_1-n_2)x]dx	\\
+		&= 0
+	\end{aligned}
+	\end{equation*}
+	即$\sin n_1x$与$\cos n_2x$正交。
+	
+	任意一个函数都可以表示成一个奇函数与偶函数的和：
+	\begin{equation*}
+		f(x) = \frac{f(x)-f(-x)}{2}+\frac{f(x)+f(-x)}{2}
+	\end{equation*}
+	
+	于是，尝试使用一组正交的函数$sin nx$,$cos nx$,\textbf{1}的和来表示任意一个函数，这样就得到了傅里叶级数：
+	\begin{equation}
+	\label{Fourier_series}
+		f(x) = \frac{1}{2}a_0+\sum_{n=1}^{+\infty}(a_n\cos nx + b_n\sin nx)
+	\end{equation}
+	我们又可以算出每个基函数的系数：
+	\begin{equation}
+	\label{Fourier_coef}
+	\begin{cases}
+		a_0&=\frac{1}{\pi}\int_{0}^{2\pi}f(x)dx	\\
+		a_n&=\frac{1}{\pi}\int_{0}^{2\pi}f(x)\cos nxdx	\\
+		b_n&=\frac{1}{\pi}\int_{0}^{2\pi}f(x)\sin nxdx
+	\end{cases}
+	\end{equation}
+	
+	\noindent\textbf{例：}假设$k\in \mathbb{Z}$，欲把函数
+	\begin{equation*}
+		f(x)=
+		\begin{cases}
+		1&, x\in [2k\pi,(2k+1)\pi)	\\
+		0&, others
+	\end{cases}
+	\end{equation*}
+	展开成傅里叶级数，则
+	\begin{equation*}
+	\begin{aligned}
+		a_0 
+		&= \frac{1}{\pi}\int_0^{2\pi}f(x)dx=1	\\
+		a_n 
+		&= \frac{1}{\pi}\int_0^{2\pi}f(x)\cos nxdx	= \frac{1}{n\pi}\sin nx|_0^{\pi}	= 0	\\
+		b_n 
+		&= \frac{1}{\pi}\int_0^{2\pi}f(x)\sin nxdx = -\frac{1}{n\pi}\cos nx|_0^{\pi}=
+		\begin{cases}
+		\frac{2}{n\pi} &,n=2k+1	\\
+		0 &,others
+	\end{cases}
+	\end{aligned}
+	\end{equation*}
+	因此，
+	\begin{equation*}
+		f(x)=\frac{1}{2}+\frac{2}{\pi}(\sin x + \frac{1}{3}\sin 3x + \frac{1}{5}\sin 5x + \frac{1}{7}\sin 7x + \cdots)
+	\end{equation*}
+	把$f(x)$沿$x$轴左移$\frac{\pi}{2}$得到：
+	\begin{equation}
+		\label{fx_fourier}
+		f(x+\frac{\pi}{2})=\frac{1}{2}+\frac{2}{\pi}(\cos x - \frac{1}{3}\cos 3x + \frac{1}{5}\cos 5x - \frac{1}{7}\cos 7x + \cdots)
+	\end{equation}
+	把$x=0$代入式（\ref{fx_fourier}），得
+	$$
+	1-\frac{1}{3}+\frac{1}{5}-\frac{1}{7}+\cdots=\frac{\pi}{4}
+	$$
+	
+	\noindent\textbf{例：}假设$k\in \mathbb{Z}$，欲把函数
+	\begin{equation*}
+		f(x)=
+		\begin{cases}
+		x&, x\in [2k\pi,(2k+1)\pi)	\\
+		0&, others
+	\end{cases}
+	\end{equation*}
+	展开成傅里叶级数，则
+	\begin{equation*}
+	\begin{aligned}
+		a_0 
+		&= \frac{1}{\pi}\int_0^{2\pi}f(x)dx=\frac{\pi}{2}	\\
+		a_n 
+		&= \frac{1}{\pi}\int_0^{2\pi}f(x)\cos nxdx	= \frac{1}{n\pi}\int_0^{\pi}xd\sin nx = \frac{1}{n^2\pi}\cos nx|_0^{\pi} =
+		\begin{cases}
+		0	&,n=2k	\\
+		-\frac{2}{n^2\pi} &,n=2k+1
+		\end{cases}	\\
+		b_n 
+		&= \frac{1}{\pi}\int_0^{2\pi}f(x)\sin nxdx = -\frac{1}{n\pi}\int_0^{\pi}xd\cos nx = -\frac{1}{n\pi}x\cos nx|_0^{\pi} = \frac{(-1)^{n+1}}{n}
+	\end{aligned}
+	\end{equation*}
+	于是，
+	$$
+		f(x) = \frac{\pi}{4}-\frac{2}{\pi}(\cos x + \frac{\cos 3x}{3^2} + \frac{\cos 5x}{5^2}+\cdots) + (\sin x - \frac{\sin 2x}{2} + \frac{\sin 3x}{3} + \cdots)
+	$$
+	把$x=0$代入，得
+	$$
+		1 + \frac{1}{3^2} + \frac{1}{5^2} + \frac{1}{7^2} + \cdots = \frac{\pi^2}{8}
+	$$
+
+\subsection{傅里叶级数到傅里叶变换}
+	把以$T$为周期的函数$f(t)$在区间$[-\frac{T}{2},\frac{T}{2}]$上展成傅里叶级数，令$\omega=\frac{2\pi}{T}$：
+	\begin{equation}
+	\label{Fourier_T}
+	\begin{aligned}
+		f(t)
+		&=\frac{a_0}{2}+\sum_{n=1}^{+\infty}(a_n\cos n\omega t + b_n\sin n\omega t)	\\
+		a_n
+		&=\frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)\cos n\omega tdt	\\
+		b_n
+		&=\frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)\sin n\omega tdt
+	\end{aligned}
+	\end{equation}
+	
+	由欧拉公式（\ref{Euler_function}）可得：
+	\begin{equation}
+	\label{Euler_sincos}
+	\begin{cases}
+		\cos \theta &= \frac{e^{i\theta}+e^{-i\theta}}{2}	\\
+		\sin \theta &= \frac{e^{i\theta}-e^{-i\theta}}{2i}
+	\end{cases}
+	\end{equation}
+	把式（\ref{Euler_sincos}）代入（\ref{Fourier_T}）得
+	\begin{equation}
+	\begin{aligned}
+		f(t)
+		&=\frac{a_0}{2}+\sum_{n=1}^{+\infty}(a_n\frac{e^{in\omega t}+e^{-in\omega t}}{2}+b_n\frac{e^{in\omega t}-e^{-in\omega t}}{2i})	\\
+		&=\frac{a_0}{2}+\sum_{n=1}^{+\infty}(\frac{a_n-ib_n}{2}e^{in\omega t}+\frac{a_n+ib_n}{2}e^{-in\omega t})
+	\end{aligned}
+	\end{equation}
+	其中，
+	\begin{equation}
+	\begin{aligned}
+		\frac{a_n-ib_n}{2}
+		&=\frac{1}{2}[\frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)\cos n\omega tdt-i\frac{2}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)\sin n\omega tdt]	\\
+		&=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)(\cos n\omega t-i\sin n\omega t)dt	\\
+		&=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)e^{-in\omega t}dt
+	\end{aligned}
+	\end{equation}
+	同理可得
+	$$
+		\frac{a_n+ib_n}{2}=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)e^{in\omega t}dt
+	$$
+	于是，记
+	\begin{equation}
+		c_n=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}f(t)e^{-in\omega t}dt \qquad n=0, \pm 1,\pm 2,\pm 3, \dots
+	\end{equation}
+	这样，我们就得到了傅里叶级数的指数形式：
+	\begin{equation}
+	\label{Fourier_exp}
+		f(t)=\sum_{n=-\infty}^{+\infty}c_ne^{in\omega t}
+	\end{equation}
+	当$T\to +\infty$时，$f(t)=\lim\limits_{T\to +\infty}f(t)$，
+	\begin{equation}
+	\label{Fourier_int}
+	\begin{aligned}
+		f(t)
+		&=\frac{1}{T}\sum_{n=-\infty}^{+\infty}[\int_{-\frac{T}{2}}^{\frac{T}{2}}f(\tau)e^{-in\omega \tau}d\tau]e^{in\omega t}	\\
+		&=\lim\limits_{T\to +\infty}\frac{1}{T}\sum_{n=-\infty}^{+\infty}[\int_{-\frac{T}{2}}^{\frac{T}{2}}f(\tau)e^{-in\omega \tau}d\tau]e^{in\omega t}	\\
+		&=\frac{1}{2\pi}\int_{-\infty}^{+\infty}[\int_{-\infty}^{+\infty}f(\tau)e^{-i\omega \tau}d\tau]e^{i\omega t}d\omega
+	\end{aligned}
+	\end{equation}
+	由此，我们可以把一个非周期函数表示成傅里叶积分公式。设
+	\begin{equation}
+	\label{Fourier_transform}
+		F(\omega)=\int_{-\infty}^{+\infty}f(t)e^{-i\omega t}dt
+	\end{equation}
+	\begin{equation}
+	\label{Fourier_in_transform}
+		f(t)=\frac{1}{2\pi}\int_{-\infty}^{+\infty}F(\omega)e^{i\omega t}d\omega
+	\end{equation}
+	从上面两式可以看出$f(t)$与$F(\omega)$可以通过积分运算相互表示，式（\ref{Fourier_transform}）叫做$f(t)$的傅里叶变换，记为
+	$$
+		F(\omega)=\mathcal{F}[f(t)]
+	$$
+	式（\ref{Fourier_in_transform}）叫做$F(\omega)$的傅里叶逆变换，记为
+	$$
+		f(t)=\mathcal{F}^{-1}[F(\omega)]
+	$$
+
+\subsection{傳里叶变换的性质}
+	\begin{enumerate}
+		\item \textbf{线性。$\mathcal{F}[\alpha f+\beta g]=\alpha\mathcal{F}[f]+\beta\mathcal{F}[g]$}
+		
+		\item \textbf{$\mathcal{F}[f^{(n)}(t)]=(i\omega)^nF(\omega)$}	\\
+		\textbf{证明：}	\\
+		当$n=1$时，
+		\begin{equation}
+		\begin{aligned}
+			\mathcal{F}[f'(t)]
+			&=\int_{-\infty}^{+\infty}f'(t)e^{-i\omega t}dt	\\
+			&=f(t)e^{-i\omega t}|_{-\infty}^{+\infty}+i\omega \int_{-\infty}^{+\infty}f(t)e^{-i\omega t}dt	\\
+			&=i\omega F(\omega)
+		\end{aligned}
+		\end{equation}
+		同理当$n=2$时，
+		$$
+			\mathcal{F}[f''(t)]=(i\omega)^2 F(\omega)
+		$$
+		以此类推，可得
+		$$
+			\mathcal{F}[f^{(n)}(t)]=(i\omega)^nF(\omega)
+		$$
+		\hfill{\textbf{证毕}}
+		
+		\item \textbf{$\mathcal{F}^{-1}[F^{(n)}(\omega)]=(-it)^nf(t)$}
+		
+		\item \textbf{Parseval's thoerem.$\int_{-\infty}^{+\infty}|f(t)|^2dt=\frac{1}{2\pi}\int_{-\infty}^{+\infty}|F(\omega)|^2d\omega$}	\\
+		\textbf{证明：}	\\
+		$$
+			F(\omega)=\int_{-\infty}^{+\infty}f(t)e^{-i\omega t}dt
+		$$
+		$$
+			\bar{F}(\omega)=\int_{-\infty}^{+\infty}\bar{f}(t)e^{i\omega t}dt
+		$$
+		\begin{equation}
+		\begin{aligned}
+			\frac{1}{2\pi}\int_{-\infty}^{+\infty}|F(\omega)|^2d\omega
+			&=\frac{1}{2\pi}\int_{-\infty}^{+\infty}F(\omega)[\int_{-\infty}^{+\infty}\bar{f}(t)e^{i\omega t}dt]d\omega	\\
+			&=\int_{-\infty}^{+\infty}\bar{f}(t)[\frac{1}{2\pi}\int_{-\infty}^{+\infty}F(\omega)e^{i\omega t}d\omega]dt	\\
+			&=\int_{-\infty}^{+\infty}\bar{f}(t)f(t)dt	\\
+			&=\int_{-\infty}^{+\infty}|f(t)|^2dt
+		\end{aligned}
+		\end{equation}
+		\hfill{\textbf{证毕}}
+		
+		\item \textbf{卷积。$\mathcal{F}[f*g(t)]=F(\omega)G(\omega)$}	\\
+		\textbf{证明：}	\\
+		\begin{equation}
+		\begin{aligned}
+			\mathcal{F}[f*g(t)]
+			&=\int_{-\infty}^{+\infty}[\int_{-\infty}^{+\infty}f(x)g(t-x)dx]d^{-i\omega t}dt	\\
+			&=\int_{-\infty}^{+\infty}f(x)e^{-i\omega x}dx\int_{-\infty}^{+\infty}g(t-x)e^{-i\omega(t-x)}d(t-x)	\\
+			&=F(\omega)G(\omega)
+		\end{aligned}
+		\end{equation}
+		\hfill{\textbf{证毕}}
+	\end{enumerate}
+
+\section{Wavelet Transform}
+
+\section{Laplace Transform}
+

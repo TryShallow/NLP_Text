@@ -1,0 +1,33 @@
+%NLP.tex
+\documentclass[a4paper,oneside]{book}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{ctex}
+
+\title{NLP}
+
+\titleformat{\chapter}{\raggedright\Huge\bfseries}{\thechapter}{1em}{}
+\titlecontents{chapter}[0pt]{}{\bfseries\chaptername\ \thecontentslabel\quad}{}{\bfseries\hfill\contentspage}
+\renewcommand{\contentsname}{Contents}
+% page style
+\pagestyle{plain}
+
+\includeonly{Mathematics,FeatureExtraction}
+
+\begin{document}
+	\pagenumbering{Roman}
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+	\include{Mathematics}
+	\include{FeatureExtraction}
+	
+%	\chapter{Language Model}
+	
+%	\chapter{Reading Comprehension}
+\end{document}
